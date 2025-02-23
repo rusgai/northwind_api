@@ -7,18 +7,17 @@ import (
 )
 
 type Config interface {
-	get(key string) string
+	Get(key string) string
 }
-type config struct {
-}
+type config struct{}
 
-func New() Config {
-	err := godotenv.Load()
+func NewConfig(files ...string) Config {
+	err := godotenv.Load(files...)
 	if err != nil {
 		panic(err)
 	}
 	return &config{}
 }
-func (c *config) get(key string) string {
+func (c *config) Get(key string) string {
 	return os.Getenv(key)
 }

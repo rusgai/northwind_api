@@ -27,7 +27,13 @@ func (repo *CategoriesRepositoryPgImpl) GetAll(ctx context.Context) ([]entitys.C
 	return nil, nil
 }
 func (repo *CategoriesRepositoryPgImpl) GetByID(ctx context.Context, id int) (*entitys.Categories, error) {
-	return nil, nil
+	qury := `SELECT * FROM categories WHERE category_id = $1`
+	var categories entitys.Categories
+	err := repo.db.GetContext(ctx, &categories, qury, id)
+	if err != nil {
+		return nil, err
+	}
+	return &categories, nil
 }
 func (repo *CategoriesRepositoryPgImpl) Insert(ctx context.Context, categories entitys.Categories) error {
 	return nil
